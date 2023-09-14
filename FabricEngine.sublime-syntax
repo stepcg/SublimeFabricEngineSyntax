@@ -1,0 +1,102 @@
+%YAML 1.2
+---
+name: FabricEngine
+file_extensions:
+  - cfg
+scope: fabricengine
+
+contexts:
+  main:
+    # No
+    - match: '(?i)^no'
+      scope: 'variable.language'
+      push: 'starts-no'
+
+    # Default
+    - match: '(?i)^default'
+      scope: 'string'
+
+    # Quoted text
+    - match: '(?i)"'
+      scope: 'punctuation.definition.string.begin'
+      push:
+        - meta_scope: 'string.quoted.double'
+        - match: '"'
+          scope: 'punctuation.definition.string.end'
+          pop: true
+
+    # Comments (only valid at start of line)
+    - match: '(?i)^#.*$'
+      scope: 'comment'
+
+    # Boot config flag
+    - match: '(?i)^(boot) config (flags|host|logfile)(.*)$'
+      captures:
+        1: 'storage.type'
+        3: 'storage.type'
+
+    # Context control keywords
+    - match: '(?i)^(application|config terminal)$'
+      scope: 'keyword.control'
+    - match: '^(exit|end)$'
+      scope: 'keyword.control'
+    # Context control keywords with extras after them
+    - match: '(?i)^(dhcp-server subnet|interface|ip vrf|logical-intf isis|mgmt)\b'
+      scope: 'keyword.control'
+    - match: '^(exit|end)$'
+      scope: 'keyword.control'
+    # Router is context control only when it's not setting some global value of it
+    - match: '(?i)^(router (bfd|bgp|ospf|rip|isis|vrf|vrrp))$'
+      captures:
+        1: 'keyword.control'
+    # In non-context router statements highlight the inital part as non-context
+    - match: '(?i)^(router (bfd|bgp|ospf|rip|isis|vrf|vrrp))'
+      scope: 'storage.type'
+    # I-SID contexts are a bit of a paint
+    - match: '(?i)^(i-sid) (\d*)'
+      captures:
+        1: 'keyword.control'
+        2: 'entity.name.function'
+
+    # IP literals
+    - match: '(?i)\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b'
+      scope: constant.numeric.fabricengine
+    - match: '(?i)(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))'
+      scope: 'constant.numeric'
+    # IP/VLAN/I-SID/elan keywords
+    - match: '(?i)\b(ipv6|ip|vlan|i-sid|elan-transparent|elan)\b'
+      scope: 'storage.type'
+
+    # Interface identifiers
+    - match: '(?i)\d{1,}/\d{1,}'
+      scope: 'variable.parameter'
+
+    # Apply
+    - match: '(?i)\bapply\b'
+      scope: entity.name.function
+
+    # Nicknames and BMACs
+    - match: '\b[0-9a-fA-F]\.[0-9a-fA-F]{2}\.[0-9a-fA-F]{2}\b'
+      scope: 'entity.name.function'
+    - match: '([0-9a-fA-F]{4}\.){3}[0-9a-fA-F]{4}'
+      scope: 'entity.name.function'
+
+    # Plain numbers
+    - match: '(?i)\b(0x)?\d*\b'
+      scope: 'entity.name.function'
+
+    # Enable
+    - match: '(?i)enable$'
+      scope: 'entity.name.function'
+
+    # Additional commands worth highlighting at the start of a line
+    - match: '(?i)^(access-policy|auto-sense|dhcp-server|eapol|flex-uni|ike|isis|lldp|link-flap-detect|logging|mac-address-table|mac-security|ntp|password|pluggable-optical-module|rmon|slpp-guard|slpp|smtp|snmp-server|spanning-tree|spbm|ssh|sys|telnet|web-server|vlacp|lacp)' 
+      scope: 'storage.type'
+
+
+  starts-no:
+    - match: 'enable$'
+      scope: 'variable.language'
+      pop: true
+    - match: '$'
+      pop: true

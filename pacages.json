@@ -1,0 +1,19 @@
+{
+	"schema_version": "3.0.0",
+
+	"packages": [
+		{
+			"name": "FabricEngine",
+			"details": "https://github.com/CHANGETHIS",
+			"releases": [
+				{
+					"sublime_text": "*",
+					"tags": true
+				}
+			]
+		}
+	],
+
+	"dependencies": [],
+	"includes": []
+}
