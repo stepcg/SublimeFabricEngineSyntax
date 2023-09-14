@@ -4,7 +4,7 @@
 	"packages": [
 		{
 			"name": "FabricEngine",
-			"details": "https://github.com/CHANGETHIS",
+			"details": "https://github.com/stepcg/SublimeFabricEngineSyntax",
 			"releases": [
 				{
 					"sublime_text": "*",
