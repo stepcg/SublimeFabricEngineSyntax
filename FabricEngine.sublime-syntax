@@ -3,31 +3,31 @@
 name: FabricEngine
 file_extensions:
   - cfg
-scope: fabricengine
+scope: source.fabricengine
 
 contexts:
   main:
     # No
     - match: '(?i)^no'
-      scope: 'variable.language'
+      scope: 'variable.language.fabricengine'
       push: 'starts-no'
 
     # Default
     - match: '(?i)^default'
-      scope: 'string'
+      scope: 'string.fabricengine'
 
     # Quoted text
     - match: '(?i)"'
-      scope: 'punctuation.definition.string.begin'
+      scope: 'punctuation.definition.string.begin.fabricengine'
       push:
-        - meta_scope: 'string.quoted.double'
+        - meta_scope: 'string.quoted.double.fabricengine'
         - match: '"'
-          scope: 'punctuation.definition.string.end'
+          scope: 'punctuation.definition.string.end.fabricengine'
           pop: true
 
     # Comments (only valid at start of line)
     - match: '(?i)^#.*$'
-      scope: 'comment'
+      scope: 'comment.fabricengine'
 
     # Boot config flag
     - match: '(?i)^(boot) config (flags|host|logfile)(.*)$'
@@ -37,21 +37,21 @@ contexts:
 
     # Context control keywords
     - match: '(?i)^(application|config terminal)$'
-      scope: 'keyword.control'
+      scope: 'keyword.control.fabricengine'
     - match: '^(exit|end)$'
-      scope: 'keyword.control'
+      scope: 'keyword.control.fabricengine'
     # Context control keywords with extras after them
     - match: '(?i)^(dhcp-server subnet|interface|ip vrf|logical-intf isis|mgmt)\b'
-      scope: 'keyword.control'
+      scope: 'keyword.control.fabricengine'
     - match: '^(exit|end)$'
-      scope: 'keyword.control'
+      scope: 'keyword.control.fabricengine'
     # Router is context control only when it's not setting some global value of it
     - match: '(?i)^(router (bfd|bgp|ospf|rip|isis|vrf|vrrp))$'
       captures:
-        1: 'keyword.control'
+        1: 'keyword.control.fabricengine'
     # In non-context router statements highlight the inital part as non-context
     - match: '(?i)^(router (bfd|bgp|ospf|rip|isis|vrf|vrrp))'
-      scope: 'storage.type'
+      scope: 'storage.type.fabricengine'
     # I-SID contexts are a bit of a paint
     - match: '(?i)^(i-sid) (\d*)'
       captures:
@@ -62,41 +62,41 @@ contexts:
     - match: '(?i)\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b'
       scope: constant.numeric.fabricengine
     - match: '(?i)(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))'
-      scope: 'constant.numeric'
+      scope: 'constant.numeric.fabricengine'
     # IP/VLAN/I-SID/elan keywords
     - match: '(?i)\b(ipv6|ip|vlan|i-sid|elan-transparent|elan)\b'
-      scope: 'storage.type'
+      scope: 'storage.type.fabricengine'
 
     # Interface identifiers
     - match: '(?i)\d{1,}/\d{1,}'
-      scope: 'variable.parameter'
+      scope: 'variable.parameter.fabricengine'
 
     # Apply
     - match: '(?i)\bapply\b'
-      scope: entity.name.function
+      scope: entity.name.function.fabricengine
 
     # Nicknames and BMACs
     - match: '\b[0-9a-fA-F]\.[0-9a-fA-F]{2}\.[0-9a-fA-F]{2}\b'
-      scope: 'entity.name.function'
+      scope: 'entity.name.function.fabricengine'
     - match: '([0-9a-fA-F]{4}\.){3}[0-9a-fA-F]{4}'
-      scope: 'entity.name.function'
+      scope: 'entity.name.function.fabricengine'
 
     # Plain numbers
     - match: '(?i)\b(0x)?\d*\b'
-      scope: 'entity.name.function'
+      scope: 'entity.name.function.fabricengine'
 
     # Enable
     - match: '(?i)enable$'
-      scope: 'entity.name.function'
+      scope: 'entity.name.function.fabricengine'
 
     # Additional commands worth highlighting at the start of a line
     - match: '(?i)^(access-policy|auto-sense|dhcp-server|eapol|flex-uni|ike|isis|lldp|link-flap-detect|logging|mac-address-table|mac-security|ntp|password|pluggable-optical-module|rmon|slpp-guard|slpp|smtp|snmp-server|spanning-tree|spbm|ssh|sys|telnet|web-server|vlacp|lacp)' 
-      scope: 'storage.type'
+      scope: 'storage.type.fabricengine'
 
 
   starts-no:
     - match: 'enable$'
-      scope: 'variable.language'
+      scope: 'variable.language.fabricengine'
       pop: true
     - match: '$'
       pop: true
