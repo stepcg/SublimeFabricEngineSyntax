@@ -90,7 +90,7 @@ contexts:
       scope: 'entity.name.function.fabricengine'
 
     # Additional commands worth highlighting at the start of a line
-    - match: '(?i)^(access-policy|auto-sense|dhcp-server|eapol|flex-uni|ike|isis|lldp|link-flap-detect|logging|mac-address-table|mac-security|ntp|password|pluggable-optical-module|rmon|slpp-guard|slpp|smtp|snmp-server|spanning-tree|spbm|ssh|sys|telnet|web-server|vlacp|lacp)' 
+    - match: '(?i)^(access-policy|auto-sense|dhcp-server|eapol|flex-uni|ike|isis|lldp|link-flap-detect|logging|mac-address-table|mac-security|ntp|password|pluggable-optical-module|rmon|slpp-guard|slpp|smtp|snmp-server|spanning-tree|spbm|ssh|sys|system|telnet|web-server|vlacp|lacp)' 
       scope: 'storage.type.fabricengine'
 
 
